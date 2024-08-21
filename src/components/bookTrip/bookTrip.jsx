@@ -5,10 +5,10 @@ import { useAddNewTripMutation, useGetAllDestinationsQuery, useGetAllTripsQuery 
 export const BookTrip = () => {
   const traveler = useSelector((state) => state.currentTraveler.traveler);
   const [addNewTrip, {isLoading, isSuccess, isError, error}] = useAddNewTripMutation()
-  const [selectedDestination, setSelectedDestination] = useState('');
-  const [numberOfTravelers, setNumberOfTravelers] = useState('');
+  const [selectedDestination, setSelectedDestination] = useState('1');
+  const [numberOfTravelers, setNumberOfTravelers] = useState('1');
   const [selectedDate, setSelectedDate] = useState('');
-  const [duration, setDuration] = useState('');
+  const [duration, setDuration] = useState('1');
   
   const {
     data: allTrips,
@@ -68,9 +68,22 @@ export const BookTrip = () => {
 
   console.log('date', selectedDate)
 
+  const tripCost = () => {
+      if (selectedDestination, numberOfTravelers, duration) {
+        const destination = destinations.destinations.find(destination => destination.id === parseInt(selectedDestination))
+        const lodging = destination.estimatedLodgingCostPerDay * parseInt(duration);
+        const flights = destination.estimatedFlightCostPerPerson * parseInt(numberOfTravelers);
+        const total = lodging + flights;
+        const fee = total * 0.10;
+        const totalCost = total + fee
+        return `$${parseInt(totalCost).toLocaleString('en-US')}`
+      }
+  }
+
   return (
     <div>
       <div>Welcome back {traveler.name}</div>
+      <div>Estimated Cost {tripCost()}</div>
       <label htmlFor='options'>Choose a Destination:</label>
       <select
         id='options'
