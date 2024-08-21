@@ -8,8 +8,13 @@ import {
 } from './api/apiSlice';
 import './App.css';
 import { useDispatch } from 'react-redux';
-import { setCurrentTraveler, setTravelerTrips } from './slices/currentTravelerSlice';
+import {
+  setCurrentTraveler,
+  setTravelerTrips,
+} from './slices/currentTravelerSlice';
 import { UserTrips } from './components/userTrips/userTrips';
+import { Link, Route, Router, Routes } from 'react-router-dom';
+import { BookTrip } from './components/bookTrip/bookTrip';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +22,7 @@ function App() {
     data: currentTraveler,
     error: currentTravelerError,
     isLoading: currentTravelerIsLoading,
-  } = useGetSingleTravelerQuery({userId: 50});
+  } = useGetSingleTravelerQuery({ userId: 50 });
 
   const {
     data: allTrips,
@@ -34,21 +39,38 @@ function App() {
   useEffect(() => {
     if (allTrips && currentTraveler) {
       // Ensure the correct structure for allTrips
-      const trips = allTrips.trips.filter(trip => trip.userID === currentTraveler.id);
+      const trips = allTrips.trips.filter(
+        (trip) => trip.userID === currentTraveler.id
+      );
       dispatch(setTravelerTrips(trips));
     }
   }, [allTrips, currentTraveler, dispatch]);
 
-  if (currentTravelerIsLoading || allTripsIsLoading) return <div>Loading...</div>;
+  if (currentTravelerIsLoading || allTripsIsLoading)
+    return <div>Loading...</div>;
   if (currentTravelerError || allTripsError) return <div>Error occurred</div>;
 
   return (
-  <div>
     <div>
-      <button>Book a trip</button>
+      <header>
+        <nav>
+          <button>
+            <Link to='/book'>Book a trip</Link>
+          </button>
+          <button>
+            <Link to='/'>Home</Link>
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <Routes>
+          <Route path='/' element={<UserTrips />} />
+          <Route path='/book' element={<BookTrip />} />
+        </Routes>
+      </main>
     </div>
-    <UserTrips />
-  </div>);
+  );
 }
 
 export default App;
