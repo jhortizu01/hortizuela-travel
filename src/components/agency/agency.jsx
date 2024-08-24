@@ -68,6 +68,9 @@ export const Agency = () => {
         <button>
           <Link to='/todaystrips'>Today's Trips</Link>
         </button>
+        <button>
+          <Link to='/finduser'>Find User</Link>
+        </button>
       </nav>
       <div>Total Revenue: {totalRevenue()}</div>
       {pendingTrips.length > 0 ? (

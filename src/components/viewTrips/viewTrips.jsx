@@ -1,25 +1,11 @@
-// UserTrips.js
-import { useSelector } from 'react-redux';
-import {
-  useGetAllDestinationsQuery,
-  useGetAllTripsQuery,
-  useGetSingleTravelerQuery,
-} from '../../api/apiSlice';
-import './userTrips.css';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useDeleteSingleTripMutation, useGetAllDestinationsQuery, useGetAllTripsQuery, useModifySingleTripMutation } from '../../api/apiSlice';
 
-export const UserTrips = () => {
-  const trips = useSelector((state) => state.currentTraveler.trips);
-  const user = Number(useSelector((state) => state.currentTraveler.traveler));
-  const {
-    data: singleTraveler,
-    error,
-    loading,
-  } = useGetSingleTravelerQuery(user);
+export const ViewTrips = () => {
+  const { id } = useParams();
 
   const {
-    data: tripsData,
+    data: trips,
     error: tripsError,
     isLoading: tripsIsLoading,
   } = useGetAllTripsQuery();
@@ -31,18 +17,22 @@ export const UserTrips = () => {
   } = useGetAllDestinationsQuery();
   console.log('***', trips);
 
+  const [modifySingleTrip, { isLoading, isSuccess, isError, error }] =
+  useModifySingleTripMutation();
+
+  const [deleteSingleTrip, {isLoading: isDeleteLoading, isSuccess: isDeleteSuccess, isError: isDeleteError, error: deleteError}] = useDeleteSingleTripMutation()
   if (!trips || trips.length === 0) return <div>No trips found.</div>;
 
   if (destinationsIsLoading) return <div>Loading destinations...</div>;
   if (destinationsError)
     return <div>Error loading destinations: {destinationsError.message}</div>;
-
-  const mytrips = tripsData.trips.filter((trip) => {
-    return trip.userID === user;
-  });
+  
+  const mytrips = trips.trips.filter(trip => {
+    return trip.userID === parseInt(id)
+  })
 
   const tripCost = () => {
-    const cost = trips.reduce((accumulator, trip) => {
+    const cost = trips.trips.reduce((accumulator, trip) => {
       const destination = destinations.destinations.find(
         (dest) => dest.id === trip.destinationID
       );
@@ -62,20 +52,30 @@ export const UserTrips = () => {
     return `$${parseInt(cost).toLocaleString('en-US')}`;
   };
 
+ 
+  const approveTrip = (trip) => {
+    modifySingleTrip({id: trip, status: 'approved', suggestedActivites: []})
+  }
+
+  const deleteTrip = (trip) => {
+    console.log('trip id', typeof trip)
+    deleteSingleTrip(trip)
+  }
+
   return (
     <div className='home-page'>
       <header>
-        <nav>
-          <button>
-            <Link to='/book'>Book a trip</Link>
-          </button>
-          <button>
-            <Link to='/home'>Home</Link>
-          </button>
-          <button>
-            <Link to='/pendingtrips'>Pending Trips</Link>
-          </button>
-        </nav>
+      <nav>
+        <button>
+          <Link to='/todaystrips'>Today's Trips</Link>
+        </button>
+        <button>
+          <Link to='/finduser'>Find User</Link>
+        </button>
+        <button>
+          <Link to='/agency'>Home</Link>
+        </button>
+      </nav>
         {/* <div>Welcome Back {singleTraveler.name}</div> */}
       </header>
 
@@ -109,6 +109,15 @@ export const UserTrips = () => {
               </div>
               <div>Suggested Activities: {trip.suggestedActivities}</div>
               <div>Status: {trip.status}</div>
+              {trip.status === 'pending' ? (
+                <div>
+                  <button onClick={() => approveTrip(trip.id)}>Approve</button> <button>Delete</button>
+                </div>
+              ) : (
+                <div>
+                  <button onClick={() => deleteTrip(trip.id)}>Delete</button>
+                </div>
+              )}
             </div>
           );
         })}
@@ -116,3 +125,5 @@ export const UserTrips = () => {
     </div>
   );
 };
+
+

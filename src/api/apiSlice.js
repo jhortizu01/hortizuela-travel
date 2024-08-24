@@ -56,7 +56,7 @@ export const apiSlice = createApi({
       invalidatesTags: ['Trips']
     }),
     deleteSingleTrip: builder.mutation({
-      query: ({id}) => ({
+      query: (id) => ({
         url: `/Trips/${id}`,
         method: 'DELETE',
       }),

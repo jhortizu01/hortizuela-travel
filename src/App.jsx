@@ -19,6 +19,8 @@ import { Login } from './components/login/login';
 import { Agency } from './components/agency/agency';
 import { TodaysTrips } from './components/todaysTrips/todaysTrips';
 import { PendingTrips } from './components/pendingTrips/pendingTrips';
+import { FindUser } from './components/findUser/findUser';
+import { ViewTrips } from './components/viewTrips/viewTrips';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path='/agency' element={<Agency />} />
           <Route path='/todaystrips' element={<TodaysTrips />} />
           <Route path='/pendingtrips' element={<PendingTrips />} />
+          <Route path='/finduser' element={<FindUser />} />
+          <Route path='/trips/:id' element={<ViewTrips />} />
         </Routes>
       </main>
     </div>

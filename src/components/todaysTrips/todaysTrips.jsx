@@ -41,6 +41,9 @@ export const TodaysTrips = () => {
         <button>
           <Link to='/agency'>Home</Link>
         </button>
+        <button>
+          <Link to='/finduser'>Find User</Link>
+        </button>
       </nav>
       {todaysTrips.length === 0 ? (
         <div>No trips today</div>

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import {
   useGetAllDestinationsQuery,
+  useGetAllTravelersQuery,
   useGetAllTripsQuery,
 } from '../../api/apiSlice';
 import './pendingTrips.css';
