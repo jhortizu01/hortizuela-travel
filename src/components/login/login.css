@@ -1,0 +1,106 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-container .form {
+  border: solid red 1px;
+  width: 50%;
+  background-color: #FFC227;
+}
+
+/* .loginImg {
+  border: solid blue 1px;
+  width: 50%;
+  height: 100vh;
+  background-image: url('../../assets/login.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+} */
+
+.loginImg {
+  width: 50%;
+  height: 100vh; /* or any desired height */
+  overflow: hidden; /* Ensures any overflow of child elements is hidden */
+  position: relative; /* Required to position the image within the container */
+}
+
+.loginImg img {
+  width: 100%; /* Stretches the image to the width of the container */
+  height: 101%; /* Stretches the image to the height of the container */
+  object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+  position: absolute; /* Optional: Use this if you need to control positioning */
+  top: 0;
+  left: 0;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 100%;
+}
+
+.logo-container img {
+  width: 54px;
+  height: 42px;
+}
+
+.logo-container h1 {
+  font-size: 18px;
+  margin-left: 15px;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 33px;
+}
+
+h3 {
+  margin-top: 0;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.username, .password {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  width: fit-content;
+  margin-top: 10%;
+}
+
+input {
+  height: 60px;
+  width: 352px;
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+label {
+  font-size: 16px;
+}
+
+.signin {
+  background-color: #3BA1C8;
+  border: none;
+  width: 368px;
+  height: 57.5px;
+  margin-top: 50px;
+  color: white;
+  font-size: 16px;
+}

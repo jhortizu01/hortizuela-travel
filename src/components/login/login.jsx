@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCurrentTraveler, setTravelerTrips } from '../../slices/currentTravelerSlice';
+import {
+  setCurrentTraveler,
+  setTravelerTrips,
+} from '../../slices/currentTravelerSlice';
 import { useNavigate } from 'react-router-dom';
-import { useGetAllTripsQuery, useGetSingleTravelerQuery } from '../../api/apiSlice';
-
+import {
+  useGetAllTripsQuery,
+  useGetSingleTravelerQuery,
+} from '../../api/apiSlice';
+import './login.css';
+import logo from '../../assets/logo.png';
+import background from '../../assets/login.png';
 export const Login = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -30,18 +38,18 @@ export const Login = () => {
     if (!validateUsername(userName) && password === 'traveler') {
       setLoginError(false);
     } else {
-      if (userName.includes("traveler") && password === 'traveler') {
+      if (userName.includes('traveler') && password === 'traveler') {
         dispatch(setCurrentTraveler(getUserId(userName)));
         const trips = allTrips.trips.filter(
           (trip) => trip.userID === getUserId(userName)
         );
-  
+
         dispatch(setTravelerTrips(trips));
         navigate('/home');
       } else if (userName.includes('agency') && password === 'traveler') {
-        navigate('/agency')
+        navigate('/agency');
       } else {
-        setLoginError(false)
+        setLoginError(false);
       }
     }
   };
@@ -58,30 +66,41 @@ export const Login = () => {
 
   return (
     <div className='login-container'>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Username:
+      <div className='form'>
+        <div className='logo-container'>
+          <img src={logo} alt='logo' />
+          <h1>Hortizuela Travel</h1>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <h2>Let's Sign You In</h2>
+            <h3>And let the travels begin!</h3>
+          </div>
+          <div className='username'>
+            <label>Username:</label>
             <input
               type='text'
               value={userName}
               onChange={handleUserNameChange}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password:
+          </div>
+          <div className='password'>
+            <label>Password:</label>
             <input
               type='text'
               value={password}
               onChange={handlePasswordChange}
             />
-          </label>
-        </div>
-        <button type='submit'>Submit</button>
-        <div hidden={loginError}>Username or password incorrect</div>
-      </form>
+          </div>
+          <button className='signin' type='submit'>
+            Submit
+          </button>
+          <div hidden={loginError}>Username or password incorrect</div>
+        </form>
+      </div>
+      <div className='loginImg'>
+        <img src={background} alt='palm trees and sky' />
+      </div>
     </div>
   );
 };
