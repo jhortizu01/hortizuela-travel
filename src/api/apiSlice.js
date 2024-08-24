@@ -3,25 +3,28 @@ import { createApi, fetchBaseQuery } from  '@reduxjs/toolkit/query/react'
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3001/api/v1"}),
-  tagTypes: [],
+  tagTypes: ['Trips', 'Travelers'],
   endpoints: builder => ({
     getAllTravelers: builder.query ({
       query: () => ({
         url: '/travelers',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Travelers']
     }),
     getSingleTraveler: builder.query({
-      query: ({userId}) => ({
+      query: (userId) => ({
         url: `/travelers/${userId}`,
         method: 'GET'
-      })
+      }),
+      providesTags: ['Travelers']
     }),
     getAllTrips: builder.query({
       query: () => ({
         url: '/trips',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Trips']
     }),
     getAllDestinations: builder.query({
       query: () => ({
@@ -34,7 +37,8 @@ export const apiSlice = createApi({
         url: '/trips',
         method: 'POST',
         body: {id, userID, destinationID, travelers, date, duration, status, suggestedActivities}
-      })
+      }),
+      invalidatesTags: ['Trips'],
     }),
     addNewDestination: builder.mutation({
       query: ({id, destination, estimatedLodgingCostPerDay, estimatedFlightCostPerDay, image, alt}) => ({
@@ -48,13 +52,15 @@ export const apiSlice = createApi({
         url: '/updateTrip',
         method: 'POST',
         body: {id, status, suggestedActivities}
-      })
+      }),
+      invalidatesTags: ['Trips']
     }),
     deleteSingleTrip: builder.mutation({
       query: ({id}) => ({
-        url: `/trips/${id}`,
+        url: `/Trips/${id}`,
         method: 'DELETE',
-      })
+      }),
+      invalidatesTags: ['Trips']
     })
   })
 })
