@@ -26,3 +26,10 @@
 .pending-trip-card p {
   margin: 8px 0;
 }
+
+.pending-trip-card img {
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+  display: block; 
+}

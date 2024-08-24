@@ -1,6 +1,7 @@
 
 body {
   margin: 0;  width: 100%;
-  background-color: gray;
+  background-color: #FAF5EF;
   border: solid blue 1px;
+  font-family: "Rubik", sans-serif;
 }

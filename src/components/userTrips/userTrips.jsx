@@ -75,6 +75,9 @@ export const UserTrips = () => {
           <button>
             <Link to='/pendingtrips'>Pending Trips</Link>
           </button>
+          <button>
+          <Link to='/login'>Logout</Link>
+        </button>
         </nav>
         {/* <div>Welcome Back {singleTraveler.name}</div> */}
       </header>

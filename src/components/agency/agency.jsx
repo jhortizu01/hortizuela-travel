@@ -22,23 +22,23 @@ export const Agency = () => {
 
   const [modifySingleTrip, { isLoading, isSuccess, isError, error }] =
     useModifySingleTripMutation();
-  
+
   if (allTripsIsLoading) return <div>Loading...</div>;
   if (allTripsError)
     return <div>Error loading trips: {allTripsError.message}</div>;
   if (destinationsIsLoading) return <div>Loading destinations...</div>;
   if (destinationsError)
     return <div>Error loading destinations: {destinationsError.message}</div>;
-  
+
   const pendingTrips = allTrips.trips.filter((trip) => {
     return trip.status === 'pending';
   });
 
-  console.log(pendingTrips)
+  console.log(pendingTrips);
 
   const approveTrip = (trip) => {
-    modifySingleTrip({id: trip, status: 'approved', suggestedActivites: []})
-  }
+    modifySingleTrip({ id: trip, status: 'approved', suggestedActivites: [] });
+  };
 
   const totalRevenue = () => {
     const totalCost = allTrips.trips.reduce((accumulator, trip) => {
@@ -71,14 +71,36 @@ export const Agency = () => {
         <button>
           <Link to='/finduser'>Find User</Link>
         </button>
+        <button>
+          <Link to='/login'>Logout</Link>
+        </button>
       </nav>
       <div>Total Revenue: {totalRevenue()}</div>
       {pendingTrips.length > 0 ? (
         <div className='pending-trip-container'>
           {pendingTrips.map((trip) => (
             <div key={trip.id} className='pending-trip-card'>
+              <img
+                src={
+                  destinations.destinations.find(
+                    (destination) => destination.id === trip.destinationID
+                  ).image
+                }
+                alt={`image of ${
+                  destinations.destinations.find(
+                    (destination) => destination.id === trip.destinationID
+                  ).destination
+                }`}
+              />
               <h3>Trip ID: {trip.id}</h3>
-              <p>Destination: {trip.destinationID}</p>
+              <p>
+                Destination:
+                {
+                  destinations.destinations.find(
+                    (destination) => destination.id === trip.destinationID
+                  ).destination
+                }
+              </p>
               <p>Travelers: {trip.travelers}</p>
               <p>Date: {trip.date}</p>
               <p>Duration: {trip.duration} days</p>

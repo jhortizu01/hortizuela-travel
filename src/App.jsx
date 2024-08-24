@@ -21,13 +21,15 @@ import { TodaysTrips } from './components/todaysTrips/todaysTrips';
 import { PendingTrips } from './components/pendingTrips/pendingTrips';
 import { FindUser } from './components/findUser/findUser';
 import { ViewTrips } from './components/viewTrips/viewTrips';
+import { Landing } from './components/landing/landing';
 
 function App() {
   return (
     <div className="container">
       <main>
         <Routes>
-          <Route path='/' element={<Login />} />
+          <Route path='/' element={<Landing />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/home' element={<UserTrips />} />
           <Route path='/book' element={<BookTrip />} />
           <Route path='/agency' element={<Agency />} />

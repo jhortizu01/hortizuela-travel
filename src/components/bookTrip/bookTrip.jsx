@@ -113,15 +113,18 @@ export const BookTrip = () => {
     <div className='booking-container'>
       <header>
         <nav>
+        <button>
+            <Link to='/home'>Home</Link>
+          </button>
           <button>
             <Link to='/book'>Book a trip</Link>
           </button>
           <button>
-            <Link to='/home'>Home</Link>
-          </button>
-          <button>
             <Link to='/pendingtrips'>Pending Trips</Link>
           </button>
+          <button>
+          <Link to='/login'>Logout</Link>
+        </button>
         </nav>
       </header>
 

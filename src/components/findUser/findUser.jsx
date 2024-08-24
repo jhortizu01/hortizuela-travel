@@ -40,13 +40,13 @@ export const FindUser = () => {
     <div>
       <nav>
         <button>
+          <Link to='/agency'>Home</Link>
+        </button>
+        <button>
           <Link to='/todaystrips'>Today's Trips</Link>
         </button>
         <button>
-          <Link to='/finduser'>Find User</Link>
-        </button>
-        <button>
-          <Link to='/agency'>Home</Link>
+          <Link to='/login'>Logout</Link>
         </button>
       </nav>
       <form onSubmit={handleSubmit}>
