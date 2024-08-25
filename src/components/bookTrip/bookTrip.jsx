@@ -9,23 +9,27 @@ import './bookTrip.css';
 import { Link } from 'react-router-dom';
 import { setTravelerTrips } from '../../slices/currentTravelerSlice';
 import { TravelerNavBar } from '../travlerNavBar/travelerNavbar';
+import { FormControl, InputLabel, Menu, MenuItem, Select } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export const BookTrip = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const traveler = useSelector((state) => state.currentTraveler.traveler);
-  const trips = useSelector((state) => state.currentTraveler.trips)
+  const trips = useSelector((state) => state.currentTraveler.trips);
   const [addNewTrip, { isLoading, isSuccess, isError, error }] =
     useAddNewTripMutation();
   const [selectedDestination, setSelectedDestination] = useState('1');
   const [numberOfTravelers, setNumberOfTravelers] = useState('1');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(dayjs());
   const [duration, setDuration] = useState('1');
 
   const {
     data: allTrips,
     error: allTripsError,
     isLoading: allTripsIsLoading,
-    refetch: refetchTrips
+    refetch: refetchTrips,
   } = useGetAllTripsQuery();
 
   const {
@@ -40,7 +44,6 @@ export const BookTrip = () => {
     }
   }, [isSuccess, refetchTrips]);
 
-
   if (destinationsIsLoading) return <div>Loading destinations...</div>;
   if (destinationsError)
     return <div>Error loading destinations: {destinationsError.message}</div>;
@@ -54,13 +57,12 @@ export const BookTrip = () => {
   };
 
   const handleDateChange = (event) => {
+    console.log(event.target.value)
     setSelectedDate(event.target.value);
   };
 
   function convertDateFormat(dateString) {
-    const [year, month, day] = dateString.split('-');
-
-    return `${year}/${month}/${day}`;
+   return dayjs(dateString).format('YYYY/MM/DD')
   }
 
   const handleDurationChange = (event) => {
@@ -79,13 +81,15 @@ export const BookTrip = () => {
       status: 'pending',
       suggestedActivities: [],
     });
-    console.log('allTrips', allTrips)
-    console.log('traveler', traveler)
-    const userTrips = allTrips.trips.filter(trip => {
-      return trip.userID === Number(traveler)
-    })
-    console.log('userTrips', userTrips)
-    dispatch(setTravelerTrips(userTrips))
+
+    console.log('DATE', convertDateFormat(selectedDate))
+    console.log('allTrips', allTrips);
+    console.log('traveler', traveler);
+    const userTrips = allTrips.trips.filter((trip) => {
+      return trip.userID === Number(traveler);
+    });
+    console.log('userTrips', userTrips);
+    dispatch(setTravelerTrips(userTrips));
   };
 
   if (isError) {
@@ -114,52 +118,51 @@ export const BookTrip = () => {
     <div className='booking-container'>
       <TravelerNavBar />
 
-      <div>Welcome back {traveler.name}</div>
       <div>Estimated Cost {tripCost()}</div>
-      <div>
-        <label htmlFor='options'>Choose a Destination:</label>
-        <select
-          id='options'
+      <FormControl fullWidth>
+        <InputLabel id='location-label'>Location</InputLabel>
+        <Select
+          labelId='location-label'
+          id='location-select'
           value={selectedDestination}
+          label='location'
           onChange={handleDestinationChange}
         >
-          {/* <option value=''>--Please choose an option--</option>
-        <option value='option1'>Option 1</option>
-        <option value='option2'>Option 2</option>
-        <option value='option3'>Option 3</option> */}
           {destinations.destinations.map((destination) => {
             return (
-              <option key={destination.id} value={destination.id}>
+              <MenuItem key={destination.id} value={destination.id}>
                 {destination.destination}
-              </option>
+              </MenuItem>
             );
           })}
-        </select>
-      </div>
-      <div>
-        <label htmlFor='options'>Choose number of Travelers:</label>
-        <select
-          id='options'
+        </Select>
+      </FormControl>
+      <br></br>
+      <FormControl>
+        <InputLabel id='number-of-travelers-label'>
+          Number of Travelers
+        </InputLabel>
+        <Select
+          labelId='number-of-traveler-select-label'
+          id='number-of-traveler-select'
           value={numberOfTravelers}
+          label='Number of Travelers'
           onChange={handleTravlersChange}
         >
           {Array.from({ length: 10 }, (_, index) => (
-            <option key={index + 1} value={index + 1}>
+            <MenuItem key={index + 1} value={index + 1}>
               {index + 1}
-            </option>
+            </MenuItem>
           ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor='date-input'>Choose a date:</label>
-        <input
-          type='date'
-          id='date-input'
+        </Select>
+      </FormControl>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
           value={selectedDate}
-          onChange={handleDateChange}
+          onChange={(newValue) => setSelectedDate(newValue)}
         />
-      </div>
-      <div>
+      </LocalizationProvider>
+      {/* <div>
         <label htmlFor='options'>Choose number of days:</label>
         <select id='options' value={duration} onChange={handleDurationChange}>
           {Array.from({ length: 10 }, (_, index) => (
@@ -168,7 +171,26 @@ export const BookTrip = () => {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
+
+<FormControl>
+        <InputLabel id='duration-label'>
+         Duration
+        </InputLabel>
+        <Select
+          labelId='duration-select-label'
+          id='duration-select'
+          value={duration}
+          label='Number of Travelers'
+          onChange={handleDurationChange}
+        >
+          {Array.from({ length: 10 }, (_, index) => (
+            <MenuItem key={index + 1} value={index + 1}>
+              {index + 1}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );
