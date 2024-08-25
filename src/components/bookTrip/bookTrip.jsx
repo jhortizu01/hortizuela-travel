@@ -57,12 +57,12 @@ export const BookTrip = () => {
   };
 
   const handleDateChange = (event) => {
-    console.log(event.target.value)
+    console.log(event.target.value);
     setSelectedDate(event.target.value);
   };
 
   function convertDateFormat(dateString) {
-   return dayjs(dateString).format('YYYY/MM/DD')
+    return dayjs(dateString).format('YYYY/MM/DD');
   }
 
   const handleDurationChange = (event) => {
@@ -82,7 +82,7 @@ export const BookTrip = () => {
       suggestedActivities: [],
     });
 
-    console.log('DATE', convertDateFormat(selectedDate))
+    console.log('DATE', convertDateFormat(selectedDate));
     console.log('allTrips', allTrips);
     console.log('traveler', traveler);
     const userTrips = allTrips.trips.filter((trip) => {
@@ -119,7 +119,7 @@ export const BookTrip = () => {
       <TravelerNavBar />
 
       <div>Estimated Cost {tripCost()}</div>
-      <FormControl fullWidth>
+      <FormControl style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}>
         <InputLabel id='location-label'>Location</InputLabel>
         <Select
           labelId='location-label'
@@ -138,7 +138,7 @@ export const BookTrip = () => {
         </Select>
       </FormControl>
       <br></br>
-      <FormControl>
+      <FormControl style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}>
         <InputLabel id='number-of-travelers-label'>
           Number of Travelers
         </InputLabel>
@@ -158,6 +158,7 @@ export const BookTrip = () => {
       </FormControl>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
+          sx={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}
           value={selectedDate}
           onChange={(newValue) => handleDateChange(newValue)}
         />
@@ -173,15 +174,13 @@ export const BookTrip = () => {
         </select>
       </div> */}
 
-<FormControl>
-        <InputLabel id='duration-label'>
-         Duration
-        </InputLabel>
+      <FormControl style={{ width: '400px', marginTop: '25px', backgroundColor: 'white' }}>
+        <InputLabel id='duration-label'>Duration</InputLabel>
         <Select
           labelId='duration-select-label'
           id='duration-select'
           value={duration}
-          label='Number of Travelers'
+          label='duration'
           onChange={handleDurationChange}
         >
           {Array.from({ length: 10 }, (_, index) => (
@@ -191,7 +190,7 @@ export const BookTrip = () => {
           ))}
         </Select>
       </FormControl>
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="submit" onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
