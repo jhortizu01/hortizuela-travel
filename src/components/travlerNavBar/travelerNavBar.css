@@ -1,0 +1,56 @@
+/* General styles for header */
+header {
+  border: solid red 1px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/* General link styles */
+a {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 20px;
+  text-decoration: none; /* This can be handled individually by the active/inactive classes */
+}
+
+/* Active and inactive link styling */
+.active-link {
+  text-decoration: underline;
+  text-decoration-color:  #FFC34A;
+  text-decoration-thickness: 5px;
+  color: black;
+  text-underline-offset: 5px;
+}
+
+.inactive-link {
+  color: black;
+  text-decoration: none;
+}
+
+/* Logout button-specific styling */
+.logout {
+  display: inline-block;
+  width: 100px;
+  height: 45px;
+  text-align: center; /* Center text horizontally */
+  line-height: 50px; /* Vertically centers single-line text */
+  background-color: #3F86BC;
+  color: white; /* Button text color */
+  border-radius: 50px; /* Optional: Add some rounding to the button edges */
+  text-decoration: none; /* Ensure no underline */
+}
+
+/* Optional: Add hover effect for the button */
+.logout:hover {
+  background-color: #2d6da4; /* Darken the background on hover */
+}

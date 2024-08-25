@@ -4,7 +4,7 @@ import {
   setCurrentTraveler,
   setTravelerTrips,
 } from '../../slices/currentTravelerSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   useGetAllTripsQuery,
   useGetSingleTravelerQuery,
@@ -69,7 +69,9 @@ export const Login = () => {
       <div className='form'>
         <div className='logo-container'>
           <img src={logo} alt='logo' />
-          <h1>Hortizuela Travel</h1>
+          <h1>
+            <Link to='/'>Hortizuela Travel</Link>
+          </h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div>

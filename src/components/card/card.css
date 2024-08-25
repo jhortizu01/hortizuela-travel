@@ -1,0 +1,27 @@
+.card {
+  width: 200px;
+  border-radius: 50px 50px 0 0;
+  border: solid black 1px;
+  overflow: hidden; 
+  margin-right: 10px;
+}
+
+.card img {
+  width: 100%;
+  height: 135px; 
+  display: block; 
+  border-radius: 50px 50px 0 0; 
+  object-fit: cover;
+}
+
+.card div {
+  padding-left: 5px;
+}
+
+.card div:last-of-type {
+  padding-bottom: 5px;
+}
+
+.card div:first-of-type {
+  padding-top: 5px;
+}

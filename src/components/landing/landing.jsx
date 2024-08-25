@@ -15,7 +15,7 @@ export const Landing = () => {
           <img src={logo} alt='logo' />
           <h1>Hortizuela Travel</h1>
         </div>
-        <button>
+        <button className="login">
           <Link to='/login'>Login</Link>
         </button>
       </nav>

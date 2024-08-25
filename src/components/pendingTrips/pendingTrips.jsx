@@ -6,6 +6,8 @@ import {
 } from '../../api/apiSlice';
 import './pendingTrips.css';
 import { Link } from 'react-router-dom';
+import { TravelerNavBar } from '../travlerNavBar/travelerNavbar';
+import { Card } from '../card/card';
 
 export const PendingTrips = () => {
   const user = Number(useSelector((state) => state.currentTraveler.traveler));
@@ -39,57 +41,17 @@ export const PendingTrips = () => {
   if (tripsError || destinationsError) return <div>Error occurred</div>;
 
   return (
-    <div className='pending-trips-container'>
-      <header>
-        <nav>
-          <button>
-            <Link to='/book'>Book a trip</Link>
-          </button>
-          <button>
-            <Link to='/home'>Home</Link>
-          </button>
-          <button>
-            <Link to='/pendingtrips'>Pending Trips</Link>
-          </button>
-          <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-        </nav>
-        {/* <div>Welcome Back {singleTraveler.name}</div> */}
-      </header>
+    <div >
+      <TravelerNavBar />
+      <div className='pending-trips-container'>
       {pendingTrips.length > 0 ? (
         pendingTrips.map((trip) => (
-          <div key={trip.id} className='pending-trips-card'>
-            <img
-              src={
-                destinations.destinations.find(
-                  (destination) => destination.id === trip.destinationID
-                ).image
-              }
-              alt={`image of ${
-                destinations.destinations.find(
-                  (destination) => destination.id === trip.destinationID
-                ).destination
-              }`}
-            />
-            <div>Date: {trip.date}</div>
-            <div>Travelers: {trip.travelers}</div>
-            <div>Duration: {trip.duration}</div>
-            <div>
-              Destination:{' '}
-              {
-                destinations.destinations.find(
-                  (destination) => destination.id === trip.destinationID
-                ).destination
-              }
-            </div>
-            <div>Suggested Activities: {trip.suggestedActivities}</div>
-            <div>Status: {trip.status}</div>
-          </div>
+          <Card trip={trip} destinations={destinations} key={trip.id} />
         ))
       ) : (
         <div>No pending trips</div>
       )}
+      </div>
     </div>
   );
 };

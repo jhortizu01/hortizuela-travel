@@ -43,7 +43,7 @@ nav div h1 {
   margin-left: 15px;
 }
 
-nav button {
+.login {
   background-color: #3BA1C8;
   border: none;
   width: 148px;
@@ -51,7 +51,7 @@ nav button {
   border-radius: 50px;
 }
 
-nav button a {
+.login a {
   font-family: "Rubik", sans serif;
   font-size: 15px;
   color: white;

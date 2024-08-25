@@ -8,6 +8,7 @@ import {
 import './bookTrip.css';
 import { Link } from 'react-router-dom';
 import { setTravelerTrips } from '../../slices/currentTravelerSlice';
+import { TravelerNavBar } from '../travlerNavBar/travelerNavbar';
 
 export const BookTrip = () => {
   const dispatch = useDispatch()
@@ -111,22 +112,7 @@ export const BookTrip = () => {
 
   return (
     <div className='booking-container'>
-      <header>
-        <nav>
-        <button>
-            <Link to='/home'>Home</Link>
-          </button>
-          <button>
-            <Link to='/book'>Book a trip</Link>
-          </button>
-          <button>
-            <Link to='/pendingtrips'>Pending Trips</Link>
-          </button>
-          <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-        </nav>
-      </header>
+      <TravelerNavBar />
 
       <div>Welcome back {traveler.name}</div>
       <div>Estimated Cost {tripCost()}</div>

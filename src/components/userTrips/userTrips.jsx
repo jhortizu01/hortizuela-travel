@@ -6,8 +6,10 @@ import {
   useGetSingleTravelerQuery,
 } from '../../api/apiSlice';
 import './userTrips.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
+import { TravelerNavBar } from '../travlerNavBar/travelerNavbar';
+import { Card } from '../card/card';
 
 export const UserTrips = () => {
   const trips = useSelector((state) => state.currentTraveler.trips);
@@ -62,57 +64,17 @@ export const UserTrips = () => {
     return `$${parseInt(cost).toLocaleString('en-US')}`;
   };
 
+  console.log("dest in trips", destinations)
+
   return (
     <div className='home-page'>
-      <header>
-        <nav>
-          <button>
-            <Link to='/book'>Book a trip</Link>
-          </button>
-          <button>
-            <Link to='/home'>Home</Link>
-          </button>
-          <button>
-            <Link to='/pendingtrips'>Pending Trips</Link>
-          </button>
-          <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-        </nav>
-        {/* <div>Welcome Back {singleTraveler.name}</div> */}
-      </header>
+      <TravelerNavBar />
 
       <div>Total cost of all trips: {tripCost()}</div>
       <div className='destination-card-container'>
         {mytrips.map((trip) => {
           return (
-            <div key={trip.id} className='destination-card'>
-              <img
-                src={
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).image
-                }
-                alt={`image of ${
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }`}
-              />
-              <div>Date: {trip.date}</div>
-              <div>Travelers: {trip.travelers}</div>
-              <div>Duration: {trip.duration}</div>
-              <div>
-                Destination:{' '}
-                {
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }
-              </div>
-              <div>Suggested Activities: {trip.suggestedActivities}</div>
-              <div>Status: {trip.status}</div>
-            </div>
+            <Card trip={trip} destinations={destinations} key={trip.id} />
           );
         })}
       </div>
