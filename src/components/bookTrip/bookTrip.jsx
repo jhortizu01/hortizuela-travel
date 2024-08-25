@@ -159,7 +159,7 @@ export const BookTrip = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           value={selectedDate}
-          onChange={(newValue) => setSelectedDate(newValue)}
+          onChange={(newValue) => handleDateChange(newValue)}
         />
       </LocalizationProvider>
       {/* <div>
