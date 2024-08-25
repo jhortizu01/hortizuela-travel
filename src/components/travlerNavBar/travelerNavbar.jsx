@@ -1,16 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import './travelerNavBar.css';
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.png';
 
 export const TravelerNavBar = () => {
   return (
     <header>
       <div className='logo-container'>
-          <img src={logo} alt='logo' />
-          <h1>
-            <NavLink to='/'>Hortizuela Travel</NavLink>
-          </h1>
-        </div>
+        <img src={logo} alt='logo' />
+        <h1>
+          <NavLink to='/'>Hortizuela Travel</NavLink>
+        </h1>
+      </div>
       <nav>
         <NavLink
           to='/home'
@@ -36,10 +36,7 @@ export const TravelerNavBar = () => {
         >
           Pending Trips
         </NavLink>
-        <NavLink
-          to='/login'
-          className="logout"
-        >
+        <NavLink to='/login' className='logout'>
           Logout
         </NavLink>
       </nav>

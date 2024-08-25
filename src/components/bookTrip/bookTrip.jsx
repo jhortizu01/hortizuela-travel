@@ -117,8 +117,7 @@ export const BookTrip = () => {
   return (
     <div className='booking-container'>
       <TravelerNavBar />
-
-      <div>Estimated Cost {tripCost()}</div>
+      <h1>Estimated Cost {tripCost()}</h1>
       <FormControl style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}>
         <InputLabel id='location-label'>Location</InputLabel>
         <Select
@@ -163,17 +162,6 @@ export const BookTrip = () => {
           onChange={(newValue) => handleDateChange(newValue)}
         />
       </LocalizationProvider>
-      {/* <div>
-        <label htmlFor='options'>Choose number of days:</label>
-        <select id='options' value={duration} onChange={handleDurationChange}>
-          {Array.from({ length: 10 }, (_, index) => (
-            <option key={index + 1} value={index + 1}>
-              {index + 1}
-            </option>
-          ))}
-        </select>
-      </div> */}
-
       <FormControl style={{ width: '400px', marginTop: '25px', backgroundColor: 'white' }}>
         <InputLabel id='duration-label'>Duration</InputLabel>
         <Select

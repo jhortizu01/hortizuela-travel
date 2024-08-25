@@ -3,6 +3,7 @@
   flex-direction: row;
   height: 100vh;
   font-family: "Poppins", sans-serif;
+  overflow-y: hidden;
 }
 
 .login-container .form {
@@ -30,7 +31,7 @@
 
 .loginImg img {
   width: 100%; /* Stretches the image to the width of the container */
-  height: 101%; /* Stretches the image to the height of the container */
+  height: 103%; /* Stretches the image to the height of the container */
   object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
   position: absolute; /* Optional: Use this if you need to control positioning */
   top: 0;

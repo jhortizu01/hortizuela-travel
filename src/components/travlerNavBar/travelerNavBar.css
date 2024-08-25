@@ -13,6 +13,7 @@ nav {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
 /* General link styles */
@@ -53,4 +54,14 @@ a {
 /* Optional: Add hover effect for the button */
 .logout:hover {
   background-color: #2d6da4; /* Darken the background on hover */
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
 }
