@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useGetAllTravelersQuery } from '../../api/apiSlice';
 import { current } from '@reduxjs/toolkit';
 import { Link, useNavigate } from 'react-router-dom';
+import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
 
 export const FindUser = () => {
   const [searchData, setSearchData] = useState('');
@@ -38,17 +39,7 @@ export const FindUser = () => {
 
   return (
     <div>
-      <nav>
-        <button>
-          <Link to='/agency'>Home</Link>
-        </button>
-        <button>
-          <Link to='/todaystrips'>Today's Trips</Link>
-        </button>
-        <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-      </nav>
+      <AgencyNavBar />
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='name'>Name:</label>

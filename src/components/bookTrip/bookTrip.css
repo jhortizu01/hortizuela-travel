@@ -5,6 +5,10 @@
   justify-content: center;
 }
 
+.estimated-cost {
+  margin-top: 20px;
+}
+
 .submit {
   display: inline-block;
   width: 400px;

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useGetAllDestinationsQuery, useGetAllTripsQuery } from '../../api/apiSlice';
-
+import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
+import { Card } from '../card/card';
+import './todaysTrips.css'
 export const TodaysTrips = () => {
   const {
     data: allTrips,
@@ -37,52 +39,18 @@ export const TodaysTrips = () => {
 
   return (
     <div>
-      <nav>
-        <button>
-          <Link to='/agency'>Home</Link>
-        </button>
-        <button>
-          <Link to='/finduser'>Find User</Link>
-        </button>
-        <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-      </nav>
+      <AgencyNavBar />
+      <div className='todays-trips-container'>
       {todaysTrips.length === 0 ? (
         <div>No trips today</div>
       ) : (
-        allTrips.trips.map((trip) => {
+        todaysTrips.map((trip) => {
           return (
-            <div key={trip.id} className='destination-card'>
-              <img
-                src={
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).image
-                }
-                alt={`image of ${
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }`}
-              />
-              <div>Date: {trip.date}</div>
-              <div>Travelers: {trip.travelers}</div>
-              <div>Duration: {trip.duration}</div>
-              <div>
-                Destination:{' '}
-                {
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }
-              </div>
-              <div>Suggested Activities: {trip.suggestedActivities}</div>
-              <div>Status: {trip.status}</div>
-            </div>
+            <Card key={trip.id} trip={trip} destinations={destinations} />
           );
         })
       )}
+      </div>
     </div>
   );
 };

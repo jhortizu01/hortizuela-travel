@@ -5,6 +5,8 @@ import {
   useModifySingleTripMutation,
 } from '../../api/apiSlice';
 import './agency.css';
+import { Card } from '../card/card'
+import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
 
 export const Agency = () => {
   const {
@@ -64,49 +66,40 @@ export const Agency = () => {
 
   return (
     <div className='agency-page'>
-      <nav>
-        <button>
-          <Link to='/todaystrips'>Today's Trips</Link>
-        </button>
-        <button>
-          <Link to='/finduser'>Find User</Link>
-        </button>
-        <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-      </nav>
+      <AgencyNavBar />
       <div>Total Revenue: {totalRevenue()}</div>
       {pendingTrips.length > 0 ? (
         <div className='pending-trip-container'>
           {pendingTrips.map((trip) => (
-            <div key={trip.id} className='pending-trip-card'>
-              <img
-                src={
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).image
-                }
-                alt={`image of ${
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }`}
-              />
-              <h3>Trip ID: {trip.id}</h3>
-              <p>
-                Destination:
-                {
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }
-              </p>
-              <p>Travelers: {trip.travelers}</p>
-              <p>Date: {trip.date}</p>
-              <p>Duration: {trip.duration} days</p>
-              <p>Status: {trip.status}</p>
-              <button onClick={() => approveTrip(trip.id)}>Approve Trip</button>
-            </div>
+            <Card key={trip.id} trip={trip} destinations={destinations} />
+            // <div key={trip.id} className='pending-trip-card'>
+            //   <img
+            //     src={
+            //       destinations.destinations.find(
+            //         (destination) => destination.id === trip.destinationID
+            //       ).image
+            //     }
+            //     alt={`image of ${
+            //       destinations.destinations.find(
+            //         (destination) => destination.id === trip.destinationID
+            //       ).destination
+            //     }`}
+            //   />
+            //   <h3>Trip ID: {trip.id}</h3>
+            //   <p>
+            //     Destination:
+            //     {
+            //       destinations.destinations.find(
+            //         (destination) => destination.id === trip.destinationID
+            //       ).destination
+            //     }
+            //   </p>
+            //   <p>Travelers: {trip.travelers}</p>
+            //   <p>Date: {trip.date}</p>
+            //   <p>Duration: {trip.duration} days</p>
+            //   <p>Status: {trip.status}</p>
+            //   <button onClick={() => approveTrip(trip.id)}>Approve Trip</button>
+            // </div>
           ))}
         </div>
       ) : (

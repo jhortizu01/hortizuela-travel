@@ -69,7 +69,7 @@ export const UserTrips = () => {
   return (
     <div className='home-page'>
       <TravelerNavBar />
-      <h1>Welcome Back, {singleTraveler.name}</h1>
+      <h1 className="welcome">Welcome Back, {singleTraveler.name}</h1>
       <h2>Total cost of all trips: {tripCost()}</h2>
       <div className='destination-card-container'>
         {mytrips.map((trip) => {

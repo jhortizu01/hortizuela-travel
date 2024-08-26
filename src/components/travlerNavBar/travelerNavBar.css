@@ -1,6 +1,5 @@
 /* General styles for header */
 header {
-  border: solid red 1px;
   width: 100%;
   display: flex;
   flex-direction: row;

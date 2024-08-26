@@ -17,31 +17,7 @@
   height: calc(100% - 150px);
 }
 
-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 35px;
-}
 
-nav div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-nav div img {
-  width: 54px;
-  height: 42px;
-}
-
-nav div h1 {
-  font-size: 18px;
-  font-weight: 300px;
-  margin-left: 15px;
-}
 
 .login {
   background-color: #3BA1C8;

@@ -117,7 +117,7 @@ export const BookTrip = () => {
   return (
     <div className='booking-container'>
       <TravelerNavBar />
-      <h1>Estimated Cost {tripCost()}</h1>
+      <h1 className="estimated-cost">Estimated Cost {tripCost()}</h1>
       <FormControl style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}>
         <InputLabel id='location-label'>Location</InputLabel>
         <Select
