@@ -3,6 +3,7 @@ import { useGetAllTravelersQuery } from '../../api/apiSlice';
 import { current } from '@reduxjs/toolkit';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
+import { Autocomplete, TextField } from '@mui/material';
 
 export const FindUser = () => {
   const [searchData, setSearchData] = useState('');
@@ -37,38 +38,31 @@ export const FindUser = () => {
     navigate(`/trips/${id}`);
   };
 
+  console.log('all travs', allTravelers)
+
+  if (allTravelersIsLoading) return <div>Loading travelers</div>;
+  if (allTravelersError)
+    return <div>Error loading destinations: {allTravelers.Error.message}</div>;
+
   return (
     <div>
       <AgencyNavBar />
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='name'>Name:</label>
-          <input
-            type='text'
-            id='name'
-            name='name'
-            value={searchData}
-            onChange={handleChange}
-          />
-        </div>
-        <button type='submit'>Submit</button>
-      </form>
-      <div className='found-travelers'>
-        {currentTraveler.length > 0 ? (
-          currentTraveler.map((traveler) => {
-            return (
-              <div className='traveler-card' key={traveler.id}>
-                <div>{traveler.name}</div>
-                <button onClick={() => handleViewTrips(traveler.id)}>
-                  View their trips
-                </button>
-              </div>
-            );
-          })
-        ) : (
-          <div></div>
-        )}
-      </div>
+     <Autocomplete
+        disablePortal
+        id="search-for-user"
+        options={
+          allTravelers.travelers.map((traveler) => ({
+            label: traveler.name,
+            id: traveler.id, // Include ID here
+          }))
+        }
+        renderInput={(params) => <TextField {...params} label="Traveler" />}
+        onChange={(event, value) => {
+          if (value && value.id) {
+            handleViewTrips(value.id); // Call handleViewTrips with the selected traveler's ID
+          }
+        }}
+      />
     </div>
   );
 };
