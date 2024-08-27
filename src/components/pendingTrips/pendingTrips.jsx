@@ -44,6 +44,7 @@ export const PendingTrips = () => {
     <div >
       <TravelerNavBar />
       <div className='pending-trips-container'>
+      <h1>Pending Trips</h1>
       {pendingTrips.length > 0 ? (
         pendingTrips.map((trip) => (
           <Card trip={trip} destinations={destinations} key={trip.id} />

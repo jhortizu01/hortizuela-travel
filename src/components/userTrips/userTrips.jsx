@@ -10,8 +10,10 @@ import { Link, NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
 import { TravelerNavBar } from '../travlerNavBar/travelerNavbar';
 import { Card } from '../card/card';
+import Carousel from 'react-material-ui-carousel';
 
 export const UserTrips = () => {
+
   const trips = useSelector((state) => state.currentTraveler.trips);
   const user = Number(useSelector((state) => state.currentTraveler.traveler));
   const {
@@ -64,18 +66,16 @@ export const UserTrips = () => {
     return `$${parseInt(cost).toLocaleString('en-US')}`;
   };
 
-  console.log("dest in trips", destinations)
+  console.log('dest in trips', destinations);
 
   return (
     <div className='home-page'>
       <TravelerNavBar />
-      <h1 className="welcome">Welcome Back, {singleTraveler.name}</h1>
+      <h1 className='welcome'>Welcome Back, {singleTraveler.name}</h1>
       <h2>Total cost of all trips: {tripCost()}</h2>
       <div className='destination-card-container'>
         {mytrips.map((trip) => {
-          return (
-            <Card trip={trip} destinations={destinations} key={trip.id} />
-          );
+          return <Card trip={trip} destinations={destinations} key={trip.id} />;
         })}
       </div>
     </div>
