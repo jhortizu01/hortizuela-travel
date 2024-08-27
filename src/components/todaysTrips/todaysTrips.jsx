@@ -30,9 +30,6 @@ export const TodaysTrips = () => {
     return trip.date === getCurrentDate();
   });
 
-  console.log('alltrips', allTrips);
-  console.log('todays trips', todaysTrips);
-
   if (allTripsIsLoading) return <div>Loading...</div>;
   if (allTripsError)
     return <div>Error loading trips: {allTripsError.message}</div>;
@@ -42,7 +39,7 @@ export const TodaysTrips = () => {
       <AgencyNavBar />
       <div className='todays-trips-container'>
       {todaysTrips.length === 0 ? (
-        <div>No trips today</div>
+        <h1 className="no-trips">No trips today</h1>
       ) : (
         todaysTrips.map((trip) => {
           return (

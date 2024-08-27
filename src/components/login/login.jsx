@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentTraveler,
   setTravelerTrips,
 } from '../../slices/currentTravelerSlice';
+import {setCurrentUser} from '../../slices/currentUserSlice'
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useGetAllTripsQuery,
@@ -13,6 +14,7 @@ import './login.css';
 import logo from '../../assets/logo.png';
 import background from '../../assets/login.png';
 export const Login = () => {
+  const currentUser = useSelector((state) => state.currentUser.user)
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(true);
@@ -43,16 +45,19 @@ export const Login = () => {
         const trips = allTrips.trips.filter(
           (trip) => trip.userID === getUserId(userName)
         );
-
+        dispatch(setCurrentUser('traveler'))
         dispatch(setTravelerTrips(trips));
         navigate('/home');
       } else if (userName.includes('agency') && password === 'traveler') {
         navigate('/agency');
+        dispatch(setCurrentUser('agency'))
       } else {
         setLoginError(false);
       }
     }
   };
+
+  console.log('CURRENT USER', currentUser)
 
   const validateUsername = (username) => {
     const regex = /^(traveler([1-9]|[1-4][0-9]|50)|agency)$/; // Regex to match "traveler" followed by 1-50 or "agency"
@@ -89,7 +94,7 @@ export const Login = () => {
           <div className='password'>
             <label>Password:</label>
             <input
-              type='text'
+              type='password'
               value={password}
               onChange={handlePasswordChange}
             />

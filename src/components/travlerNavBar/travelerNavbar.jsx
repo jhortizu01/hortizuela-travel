@@ -1,8 +1,15 @@
 import { NavLink } from 'react-router-dom';
 import './travelerNavBar.css';
 import logo from '../../assets/logo.png';
+import { useDispatch } from 'react-redux';
 
 export const TravelerNavBar = () => {
+  const dispatch = useDispatch()
+
+  const clearCurrentUser = () => {
+    dispatch(clearCurrentUser())
+  }
+
   return (
     <header>
       <div className='logo-container'>
@@ -36,7 +43,7 @@ export const TravelerNavBar = () => {
         >
           Pending Trips
         </NavLink>
-        <NavLink to='/login' className='logout'>
+        <NavLink to='/login' className='logout' onClick={clearCurrentUser}>
           Logout
         </NavLink>
       </nav>

@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useDeleteSingleTripMutation, useGetAllDestinationsQuery, useGetAllTripsQuery, useModifySingleTripMutation } from '../../api/apiSlice';
+import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
+import { Card } from '../card/card';
 
 export const ViewTrips = () => {
   const { id } = useParams();
@@ -64,64 +66,49 @@ export const ViewTrips = () => {
 
   return (
     <div className='home-page'>
-      <header>
-      <nav>
-        <button>
-          <Link to='/todaystrips'>Today's Trips</Link>
-        </button>
-        <button>
-          <Link to='/finduser'>Find User</Link>
-        </button>
-        <button>
-          <Link to='/agency'>Home</Link>
-        </button>
-        <button>
-          <Link to='/login'>Logout</Link>
-        </button>
-      </nav>
-        {/* <div>Welcome Back {singleTraveler.name}</div> */}
-      </header>
+<AgencyNavBar />
 
       <div>Total cost of all trips: {tripCost()}</div>
       <div className='destination-card-container'>
         {mytrips.map((trip) => {
           return (
-            <div key={trip.id} className='destination-card'>
-              <img
-                src={
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).image
-                }
-                alt={`image of ${
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }`}
-              />
-              <div>Date: {trip.date}</div>
-              <div>Travelers: {trip.travelers}</div>
-              <div>Duration: {trip.duration}</div>
-              <div>
-                Destination:{' '}
-                {
-                  destinations.destinations.find(
-                    (destination) => destination.id === trip.destinationID
-                  ).destination
-                }
-              </div>
-              <div>Suggested Activities: {trip.suggestedActivities}</div>
-              <div>Status: {trip.status}</div>
-              {trip.status === 'pending' ? (
-                <div>
-                  <button onClick={() => approveTrip(trip.id)}>Approve</button> <button>Delete</button>
-                </div>
-              ) : (
-                <div>
-                  <button onClick={() => deleteTrip(trip.id)}>Delete</button>
-                </div>
-              )}
-            </div>
+            <Card key={trip.id} trip={trip} destinations={destinations} />
+            // <div key={trip.id} className='destination-card'>
+            //   <img
+            //     src={
+            //       destinations.destinations.find(
+            //         (destination) => destination.id === trip.destinationID
+            //       ).image
+            //     }
+            //     alt={`image of ${
+            //       destinations.destinations.find(
+            //         (destination) => destination.id === trip.destinationID
+            //       ).destination
+            //     }`}
+            //   />
+            //   <div>Date: {trip.date}</div>
+            //   <div>Travelers: {trip.travelers}</div>
+            //   <div>Duration: {trip.duration}</div>
+            //   <div>
+            //     Destination:{' '}
+            //     {
+            //       destinations.destinations.find(
+            //         (destination) => destination.id === trip.destinationID
+            //       ).destination
+            //     }
+            //   </div>
+            //   <div>Suggested Activities: {trip.suggestedActivities}</div>
+            //   <div>Status: {trip.status}</div>
+            //   {trip.status === 'pending' ? (
+            //     <div>
+            //       <button onClick={() => approveTrip(trip.id)}>Approve</button> <button>Delete</button>
+            //     </div>
+            //   ) : (
+            //     <div>
+            //       <button onClick={() => deleteTrip(trip.id)}>Delete</button>
+            //     </div>
+            //   )}
+            // </div>
           );
         })}
       </div>

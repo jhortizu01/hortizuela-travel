@@ -1,8 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import './agencyNavBar.css';
 import logo from '../../assets/logo.png';
+import { useDispatch } from 'react-redux';
 
 export const AgencyNavBar = () => {
+  const dispatch = useDispatch()
+
+  const clearCurrentUser = () => {
+    dispatch(clearCurrentUser())
+    console.log('clicked logout')
+  }
+  
   return (
     <header>
       <div className='logo-container'>
@@ -36,7 +44,7 @@ export const AgencyNavBar = () => {
         >
           Find User
         </NavLink>
-        <NavLink to='/login' className='logout'>
+        <NavLink to='/login' className='logout' onClick={clearCurrentUser}>
           Logout
         </NavLink>
       </nav>

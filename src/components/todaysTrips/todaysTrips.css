@@ -1,6 +1,9 @@
 .todays-trips-container {
   display: flex;
   flex-direction: row;
-  border: solid red 1px;
   flex-wrap: wrap;
+}
+
+.todays-trips-container h1 {
+  margin: 30px auto 0 auto;
 }
