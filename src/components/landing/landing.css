@@ -34,3 +34,54 @@
   cursor: pointer;
   text-decoration: none;
 }
+
+nav {
+  border: solid red 1px;
+  margin-right: 40px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+nav div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav div img {
+  margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+  .landing nav {
+    border: solid red 1px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav div:first-of-type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  nav div img {
+    margin-right: 5px;
+  }
+
+  nav button {
+    margin-top: 20px;
+  }
+
+  .landing-background{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -35%);
+    width: calc(100% - 100px);
+    height: calc(93% - 150px);
+  }
+}
