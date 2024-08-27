@@ -6,7 +6,7 @@ import {
   useGetAllTripsQuery,
 } from '../../api/apiSlice';
 import './bookTrip.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setTravelerTrips } from '../../slices/currentTravelerSlice';
 import { TravelerNavBar } from '../travlerNavBar/travelerNavbar';
 import { FormControl, InputLabel, Menu, MenuItem, Select } from '@mui/material';
@@ -24,7 +24,8 @@ export const BookTrip = () => {
   const [numberOfTravelers, setNumberOfTravelers] = useState('1');
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [duration, setDuration] = useState('1');
-
+  const [errorSubmitting, setErrorSubmitting] = useState(true)
+  const navigate = useNavigate()
   const {
     data: allTrips,
     error: allTripsError,
@@ -70,8 +71,7 @@ export const BookTrip = () => {
   };
 
   const handleSubmit = () => {
-    console.log('number of trips', allTrips.trips.length + 1);
-    addNewTrip({
+    const newTrip = {
       id: allTrips.trips.length + 1,
       userID: traveler,
       destinationID: parseInt(selectedDestination, 10),
@@ -80,16 +80,17 @@ export const BookTrip = () => {
       duration: parseInt(duration, 10),
       status: 'pending',
       suggestedActivities: [],
-    });
+    };
+  
+    addNewTrip(newTrip);
 
-    console.log('DATE', convertDateFormat(selectedDate));
-    console.log('allTrips', allTrips);
-    console.log('traveler', traveler);
     const userTrips = allTrips.trips.filter((trip) => {
       return trip.userID === Number(traveler);
     });
     console.log('userTrips', userTrips);
     dispatch(setTravelerTrips(userTrips));
+
+    !isError ? navigate('/tripbooked', { state: { trip: newTrip, destinations: destinations }}) : setErrorSubmitting(false)
   };
 
   if (isError) {
@@ -179,6 +180,7 @@ export const BookTrip = () => {
         </Select>
       </FormControl>
       <button className="submit" onClick={handleSubmit}>Submit</button>
+      <div hidden={errorSubmitting}>Error submitting request. Try again later.</div>
     </div>
   );
 };

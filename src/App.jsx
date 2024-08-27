@@ -22,6 +22,7 @@ import { PendingTrips } from './components/pendingTrips/pendingTrips';
 import { FindUser } from './components/findUser/findUser';
 import { ViewTrips } from './components/viewTrips/viewTrips';
 import { Landing } from './components/landing/landing';
+import { TripBooked } from './components/tripBooked/tripBooked';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path='/pendingtrips' element={<PendingTrips />} />
           <Route path='/finduser' element={<FindUser />} />
           <Route path='/trips/:id' element={<ViewTrips />} />
+          <Route path='/tripbooked' element={<TripBooked />} />
         </Routes>
       </main>
     </div>
