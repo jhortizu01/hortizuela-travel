@@ -13,9 +13,7 @@ import { Card } from '../card/card';
 import Carousel from 'react-material-ui-carousel';
 
 export const UserTrips = () => {
-
-  const trips = useSelector((state) => state.currentTraveler.trips);
-  const user = Number(useSelector((state) => state.currentTraveler.traveler));
+const user = Number(useSelector((state) => state.currentTraveler.traveler));
   const {
     data: singleTraveler,
     error,
@@ -23,7 +21,7 @@ export const UserTrips = () => {
   } = useGetSingleTravelerQuery(user);
 
   const {
-    data: tripsData,
+    data: trips,
     error: tripsError,
     isLoading: tripsIsLoading,
   } = useGetAllTripsQuery();
@@ -35,18 +33,19 @@ export const UserTrips = () => {
   } = useGetAllDestinationsQuery();
   console.log('***', trips);
 
+  if (tripsIsLoading) return <div  role="alert" aria-live="polite">Loading Trips</div>
   if (!trips || trips.length === 0) return <div  role="alert" aria-live="polite">No trips found.</div>;
 
   if (destinationsIsLoading) return <div  role="alert" aria-live="polite">Loading destinations...</div>;
   if (destinationsError)
     return <div role="alert" aria-live="assertive">Error loading destinations: {destinationsError.message}</div>;
 
-  const mytrips = tripsData.trips.filter((trip) => {
+  const mytrips = trips.trips.filter((trip) => {
     return trip.userID === user;
   });
 
   const tripCost = () => {
-    const cost = trips.reduce((accumulator, trip) => {
+    const cost = trips.trips.reduce((accumulator, trip) => {
       const destination = destinations.destinations.find(
         (dest) => dest.id === trip.destinationID
       );
