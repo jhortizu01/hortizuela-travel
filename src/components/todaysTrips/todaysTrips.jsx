@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useGetAllDestinationsQuery, useGetAllTripsQuery } from '../../api/apiSlice';
+import {
+  useGetAllDestinationsQuery,
+  useGetAllTripsQuery,
+} from '../../api/apiSlice';
 import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
 import { Card } from '../card/card';
-import './todaysTrips.css'
+import './todaysTrips.css';
 export const TodaysTrips = () => {
   const {
     data: allTrips,
@@ -30,23 +33,32 @@ export const TodaysTrips = () => {
     return trip.date === getCurrentDate();
   });
 
-  if (allTripsIsLoading) return <div>Loading...</div>;
+  if (allTripsIsLoading)
+    return (
+      <div aria-live='polite' role='status'>
+        Loading...
+      </div>
+    );
   if (allTripsError)
-    return <div>Error loading trips: {allTripsError.message}</div>;
+    return (
+      <div aria-live='assertive' role='alert'>
+        Error loading trips: {allTripsError.message}
+      </div>
+    );
 
   return (
     <div>
       <AgencyNavBar />
       <div className='todays-trips-container'>
-      {todaysTrips.length === 0 ? (
-        <h1 className="no-trips">No trips today</h1>
-      ) : (
-        todaysTrips.map((trip) => {
-          return (
-            <Card key={trip.id} trip={trip} destinations={destinations} />
-          );
-        })
-      )}
+        {todaysTrips.length === 0 ? (
+          <h1 className='no-trips'>No trips today</h1>
+        ) : (
+          todaysTrips.map((trip) => {
+            return (
+              <Card key={trip.id} trip={trip} destinations={destinations} />
+            );
+          })
+        )}
       </div>
     </div>
   );

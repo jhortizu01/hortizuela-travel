@@ -35,11 +35,11 @@ export const UserTrips = () => {
   } = useGetAllDestinationsQuery();
   console.log('***', trips);
 
-  if (!trips || trips.length === 0) return <div>No trips found.</div>;
+  if (!trips || trips.length === 0) return <div  role="alert" aria-live="polite">No trips found.</div>;
 
-  if (destinationsIsLoading) return <div>Loading destinations...</div>;
+  if (destinationsIsLoading) return <div  role="alert" aria-live="polite">Loading destinations...</div>;
   if (destinationsError)
-    return <div>Error loading destinations: {destinationsError.message}</div>;
+    return <div role="alert" aria-live="assertive">Error loading destinations: {destinationsError.message}</div>;
 
   const mytrips = tripsData.trips.filter((trip) => {
     return trip.userID === user;
@@ -65,8 +65,6 @@ export const UserTrips = () => {
 
     return `$${parseInt(cost).toLocaleString('en-US')}`;
   };
-
-  console.log('dest in trips', destinations);
 
   return (
     <div className='home-page'>

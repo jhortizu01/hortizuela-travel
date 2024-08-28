@@ -25,7 +25,11 @@ export const TravelerNavBar = () => {
   return (
     <header>
       <div className='logo-container'>
-        <img src={logo} alt='logo' />
+        <img
+          src={logo}
+          alt='Hortizuela Travel Logo'
+          aria-label='Hortizuela Travel Logo'
+        />
         <h1>
           <NavLink to='/'>Hortizuela Travel</NavLink>
         </h1>
@@ -36,6 +40,7 @@ export const TravelerNavBar = () => {
           className={({ isActive }) =>
             isActive ? 'active-link' : 'inactive-link'
           }
+          aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
         >
           Home
         </NavLink>
@@ -44,6 +49,7 @@ export const TravelerNavBar = () => {
           className={({ isActive }) =>
             isActive ? 'active-link' : 'inactive-link'
           }
+          aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
         >
           Book a trip
         </NavLink>
@@ -52,10 +58,16 @@ export const TravelerNavBar = () => {
           className={({ isActive }) =>
             isActive ? 'active-link' : 'inactive-link'
           }
+          aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
         >
           Pending Trips
         </NavLink>
-        <NavLink to='/login' className='logout' onClick={clearCurrentUser}>
+        <NavLink
+          aria-label='Logout'
+          to='/login'
+          className='logout'
+          onClick={clearCurrentUser}
+        >
           Logout
         </NavLink>
       </nav>
@@ -66,8 +78,14 @@ export const TravelerNavBar = () => {
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
           onClick={handleMenuClick}
+          aria-label='Open menu'
         >
-          <img src={menu} alt='menu' className='menu-button' />
+          <img
+            src={menu}
+            alt='menu'
+            aria-hidden='true'
+            className='menu-button'
+          />
         </Button>
         <Menu
           id='basic-menu'
@@ -77,6 +95,7 @@ export const TravelerNavBar = () => {
           MenuListProps={{
             'aria-labelledby': 'basic-button',
           }}
+          aria-labelledby='basic-button'
         >
           <MenuItem>
             {' '}
@@ -85,6 +104,7 @@ export const TravelerNavBar = () => {
               className={({ isActive }) =>
                 isActive ? 'active-link' : 'inactive-link'
               }
+              aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
             >
               Home
             </NavLink>
@@ -96,6 +116,7 @@ export const TravelerNavBar = () => {
               className={({ isActive }) =>
                 isActive ? 'active-link' : 'inactive-link'
               }
+              aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
             >
               Book a trip
             </NavLink>
@@ -106,12 +127,18 @@ export const TravelerNavBar = () => {
               className={({ isActive }) =>
                 isActive ? 'active-link' : 'inactive-link'
               }
+              aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
             >
               Pending Trips
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to='/login' className='logout' onClick={clearCurrentUser}>
+            <NavLink
+              aria-label='Logout'
+              to='/login'
+              className='logout'
+              onClick={clearCurrentUser}
+            >
               Logout
             </NavLink>
           </MenuItem>

@@ -24,8 +24,8 @@ export const BookTrip = () => {
   const [numberOfTravelers, setNumberOfTravelers] = useState('1');
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [duration, setDuration] = useState('1');
-  const [errorSubmitting, setErrorSubmitting] = useState(true)
-  const navigate = useNavigate()
+  const [errorSubmitting, setErrorSubmitting] = useState(true);
+  const navigate = useNavigate();
   const {
     data: allTrips,
     error: allTripsError,
@@ -81,7 +81,7 @@ export const BookTrip = () => {
       status: 'pending',
       suggestedActivities: [],
     };
-  
+
     addNewTrip(newTrip);
 
     const userTrips = allTrips.trips.filter((trip) => {
@@ -90,7 +90,11 @@ export const BookTrip = () => {
     console.log('userTrips', userTrips);
     dispatch(setTravelerTrips(userTrips));
 
-    !isError ? navigate('/tripbooked', { state: { trip: newTrip, destinations: destinations }}) : setErrorSubmitting(false)
+    !isError
+      ? navigate('/tripbooked', {
+          state: { trip: newTrip, destinations: destinations },
+        })
+      : setErrorSubmitting(false);
   };
 
   if (isError) {
@@ -118,8 +122,10 @@ export const BookTrip = () => {
   return (
     <div className='booking-container'>
       <TravelerNavBar />
-      <h1 className="estimated-cost">Estimated Cost {tripCost()}</h1>
-      <FormControl style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}>
+      <h1 className='estimated-cost'>Estimated Cost {tripCost()}</h1>
+      <FormControl
+        style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}
+      >
         <InputLabel id='location-label'>Location</InputLabel>
         <Select
           labelId='location-label'
@@ -138,7 +144,10 @@ export const BookTrip = () => {
         </Select>
       </FormControl>
       <br></br>
-      <FormControl style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}>
+      <FormControl
+        aria-describedby='travelers-description'
+        style={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}
+      >
         <InputLabel id='number-of-travelers-label'>
           Number of Travelers
         </InputLabel>
@@ -161,9 +170,12 @@ export const BookTrip = () => {
           sx={{ width: '400px', marginTop: '20px', backgroundColor: 'white' }}
           value={selectedDate}
           onChange={(newValue) => handleDateChange(newValue)}
+          aria-label='Select trip start date'
         />
       </LocalizationProvider>
-      <FormControl style={{ width: '400px', marginTop: '25px', backgroundColor: 'white' }}>
+      <FormControl
+        style={{ width: '400px', marginTop: '25px', backgroundColor: 'white' }}
+      >
         <InputLabel id='duration-label'>Duration</InputLabel>
         <Select
           labelId='duration-select-label'
@@ -179,8 +191,12 @@ export const BookTrip = () => {
           ))}
         </Select>
       </FormControl>
-      <button className="submit" onClick={handleSubmit}>Submit</button>
-      <div hidden={errorSubmitting}>Error submitting request. Try again later.</div>
+      <button className='submit' onClick={handleSubmit}>
+        Submit
+      </button>
+      <div role='alert' aria-live='assertive' hidden={errorSubmitting}>
+        Error submitting request. Try again later.
+      </div>
     </div>
   );
 };

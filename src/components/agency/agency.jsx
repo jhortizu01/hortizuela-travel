@@ -1,11 +1,9 @@
-import { Link } from 'react-router-dom';
 import {
   useGetAllDestinationsQuery,
   useGetAllTripsQuery,
-  useModifySingleTripMutation,
 } from '../../api/apiSlice';
 import './agency.css';
-import { Card } from '../card/card'
+import { Card } from '../card/card';
 import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
 
 export const Agency = () => {
@@ -22,25 +20,25 @@ export const Agency = () => {
     isLoading: destinationsIsLoading,
   } = useGetAllDestinationsQuery();
 
-  const [modifySingleTrip, { isLoading, isSuccess, isError, error }] =
-    useModifySingleTripMutation();
-
-  if (allTripsIsLoading) return <div>Loading...</div>;
+  if (allTripsIsLoading) return <p aria-live='polite'>Loading trips...</p>;
   if (allTripsError)
-    return <div>Error loading trips: {allTripsError.message}</div>;
-  if (destinationsIsLoading) return <div>Loading destinations...</div>;
+    return (
+      <section aria-live='assertive'>
+        Error loading trips: {allTripsError.message}
+      </section>
+    );
+  if (destinationsIsLoading)
+    return <p aria-live='polite'>Loading destinations...</p>;
   if (destinationsError)
-    return <div>Error loading destinations: {destinationsError.message}</div>;
+    return (
+      <section aria-live='assertive'>
+        Error loading destinations: {destinationsError.message}
+      </section>
+    );
 
   const pendingTrips = allTrips.trips.filter((trip) => {
     return trip.status === 'pending';
   });
-
-  console.log(pendingTrips);
-
-  const approveTrip = (trip) => {
-    modifySingleTrip({ id: trip, status: 'approved', suggestedActivites: [] });
-  };
 
   const totalRevenue = () => {
     const totalCost = allTrips.trips.reduce((accumulator, trip) => {
@@ -67,41 +65,16 @@ export const Agency = () => {
   return (
     <div className='agency-page'>
       <AgencyNavBar />
-      <div>Total Revenue: {totalRevenue()}</div>
+      <p>Total Revenue: {totalRevenue()}</p>
+      <h2>Pending Trips</h2>
       {pendingTrips.length > 0 ? (
-        <div className='pending-trip-container'>
+        <ul className='pending-trip-container'>
           {pendingTrips.map((trip) => (
-            <Card key={trip.id} trip={trip} destinations={destinations} />
-            // <div key={trip.id} className='pending-trip-card'>
-            //   <img
-            //     src={
-            //       destinations.destinations.find(
-            //         (destination) => destination.id === trip.destinationID
-            //       ).image
-            //     }
-            //     alt={`image of ${
-            //       destinations.destinations.find(
-            //         (destination) => destination.id === trip.destinationID
-            //       ).destination
-            //     }`}
-            //   />
-            //   <h3>Trip ID: {trip.id}</h3>
-            //   <p>
-            //     Destination:
-            //     {
-            //       destinations.destinations.find(
-            //         (destination) => destination.id === trip.destinationID
-            //       ).destination
-            //     }
-            //   </p>
-            //   <p>Travelers: {trip.travelers}</p>
-            //   <p>Date: {trip.date}</p>
-            //   <p>Duration: {trip.duration} days</p>
-            //   <p>Status: {trip.status}</p>
-            //   <button onClick={() => approveTrip(trip.id)}>Approve Trip</button>
-            // </div>
+            <li key={trip.id}>
+              <Card trip={trip} destinations={destinations} />
+            </li>
           ))}
-        </div>
+        </ul>
       ) : (
         <div>No pending trips found.</div>
       )}

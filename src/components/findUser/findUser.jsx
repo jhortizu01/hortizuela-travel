@@ -6,8 +6,6 @@ import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
 import { Autocomplete, TextField } from '@mui/material';
 import './findUser.css';
 export const FindUser = () => {
-  const [searchData, setSearchData] = useState('');
-  const [currentTraveler, setCurrentTraveler] = useState('');
   const navigate = useNavigate();
   const {
     data: allTravelers,
@@ -15,34 +13,17 @@ export const FindUser = () => {
     isLoading: allTravelersIsLoading,
   } = useGetAllTravelersQuery();
 
-  const handleChange = (e) => {
-    setSearchData(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('event', searchData);
-    console.log('allTravelers', allTravelers);
-
-    const searchQuery = searchData.toLowerCase();
-
-    const filteredTravelers = allTravelers.travelers.filter((traveler) => {
-      return traveler.name.toLowerCase().includes(searchQuery);
-    });
-
-    console.log('filtered', filteredTravelers);
-    setCurrentTraveler(filteredTravelers);
-  };
-
   const handleViewTrips = (id) => {
     navigate(`/trips/${id}`);
   };
 
-  console.log('all travs', allTravelers);
-
   if (allTravelersIsLoading) return <div>Loading travelers</div>;
   if (allTravelersError)
-    return <div>Error loading destinations: {allTravelers.Error.message}</div>;
+    return (
+      <div role='alert'>
+        Error loading destinations: {allTravelers.Error.message}
+      </div>
+    );
 
   return (
     <div className='search-for-user'>
@@ -73,6 +54,7 @@ export const FindUser = () => {
           }
         }}
         sx={{ width: '350px', margin: '20px auto 0 auto' }}
+        aria-labelledby='search-for-user-label'
       />
     </div>
   );

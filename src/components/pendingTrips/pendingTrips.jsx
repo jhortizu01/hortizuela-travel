@@ -37,21 +37,31 @@ export const PendingTrips = () => {
     return trip.status === 'pending';
   });
 
-  if (tripsIsLoading || destinationsIsLoading) return <div>Loading...</div>;
-  if (tripsError || destinationsError) return <div>Error occurred</div>;
+  if (tripsIsLoading || destinationsIsLoading)
+    return (
+      <div aria-live='polite' role='status'>
+        Loading...
+      </div>
+    );
+  if (tripsError || destinationsError)
+    return (
+      <div aria-live='assertive' role='alert'>
+        Error occurred
+      </div>
+    );
 
   return (
-    <div >
+    <div>
       <TravelerNavBar />
       <div className='pending-trips-container'>
-      <h1>Pending Trips</h1>
-      {pendingTrips.length > 0 ? (
-        pendingTrips.map((trip) => (
-          <Card trip={trip} destinations={destinations} key={trip.id} />
-        ))
-      ) : (
-        <div>No pending trips</div>
-      )}
+        <h1>Pending Trips</h1>
+        {pendingTrips.length > 0 ? (
+          pendingTrips.map((trip) => (
+            <Card trip={trip} destinations={destinations} key={trip.id} />
+          ))
+        ) : (
+          <p>No pending trips</p>
+        )}
       </div>
     </div>
   );

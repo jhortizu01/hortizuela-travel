@@ -32,7 +32,7 @@ export const AgencyNavBar = () => {
           <NavLink to='/'>Hortizuela Travel</NavLink>
         </h1>
       </div>
-      <nav>
+      <nav aria-label='Main navigation'>
         <NavLink
           to='/agency'
           className={({ isActive }) =>
@@ -69,7 +69,7 @@ export const AgencyNavBar = () => {
           aria-expanded={open ? 'true' : undefined}
           onClick={handleMenuClick}
         >
-          <img src={menu} alt='menu' className='menu-button' />
+          <img src={menu} alt='menu icon' className='menu-button' />
         </Button>
         <Menu
           id='basic-menu'
@@ -112,7 +112,12 @@ export const AgencyNavBar = () => {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to='/login' className='logout' onClick={clearCurrentUser}>
+            <NavLink
+              aria-label='Logout of your account'
+              to='/login'
+              className='logout'
+              onClick={clearCurrentUser}
+            >
               Logout
             </NavLink>
           </MenuItem>

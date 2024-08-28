@@ -4,7 +4,7 @@ import {
   setCurrentTraveler,
   setTravelerTrips,
 } from '../../slices/currentTravelerSlice';
-import {setCurrentUser} from '../../slices/currentUserSlice'
+import { setCurrentUser } from '../../slices/currentUserSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useGetAllTripsQuery,
@@ -14,7 +14,7 @@ import './login.css';
 import logo from '../../assets/logo.png';
 import background from '../../assets/login.png';
 export const Login = () => {
-  const currentUser = useSelector((state) => state.currentUser.user)
+  const currentUser = useSelector((state) => state.currentUser.user);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(true);
@@ -45,19 +45,19 @@ export const Login = () => {
         const trips = allTrips.trips.filter(
           (trip) => trip.userID === getUserId(userName)
         );
-        dispatch(setCurrentUser('traveler'))
+        dispatch(setCurrentUser('traveler'));
         dispatch(setTravelerTrips(trips));
         navigate('/home');
       } else if (userName.includes('agency') && password === 'traveler') {
         navigate('/agency');
-        dispatch(setCurrentUser('agency'))
+        dispatch(setCurrentUser('agency'));
       } else {
         setLoginError(false);
       }
     }
   };
 
-  console.log('CURRENT USER', currentUser)
+  console.log('CURRENT USER', currentUser);
 
   const validateUsername = (username) => {
     const regex = /^(traveler([1-9]|[1-4][0-9]|50)|agency)$/; // Regex to match "traveler" followed by 1-50 or "agency"
@@ -78,7 +78,7 @@ export const Login = () => {
             <Link to='/'>Hortizuela Travel</Link>
           </h1>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} aria-labelledby='login-heading'>
           <div>
             <h2>Let's Sign You In</h2>
             <h3>And let the travels begin!</h3>
@@ -89,6 +89,7 @@ export const Login = () => {
               type='text'
               value={userName}
               onChange={handleUserNameChange}
+              aria-required='true'
             />
           </div>
           <div className='password'>
@@ -97,12 +98,17 @@ export const Login = () => {
               type='password'
               value={password}
               onChange={handlePasswordChange}
+              aria-required='true'
             />
           </div>
           <button className='signin' type='submit'>
             Submit
           </button>
-          <div hidden={loginError}>Username or password incorrect</div>
+          {!loginError && (
+            <div role='alert' aria-live='assertive' className='error-message'>
+              Username or password incorrect
+            </div>
+          )}{' '}
         </form>
       </div>
       <div className='loginImg'>

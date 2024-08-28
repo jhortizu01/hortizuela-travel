@@ -41,35 +41,57 @@ export const Card = ({ trip, destinations }) => {
   if (!destination) return <div>Destination not found</div>;
   console.log('CURR USER', currentUser);
   return (
-    <div className='card'>
+    <article className='card' aria-labelledby={`trip-${trip.id}-destination`}>
       <img
         src={destination.image}
         alt={`Image of ${destination.destination}`}
       />
-      <div>Date: {trip.date}</div>
-      <div>Travelers: {trip.travelers}</div>
-      <div>Duration: {trip.duration}</div>
-      <div>Destination: {destination.destination}</div>
-      <div>Suggested Activities: {trip.suggestedActivities}</div>
-      <div>Status: {trip.status}</div>
+      <p>Date: {trip.date}</p>
+      <p>Travelers: {trip.travelers}</p>
+      <p>Duration: {trip.duration}</p>
+      <p>Destination: {destination.destination}</p>
+      <p>Suggested Activities: {trip.suggestedActivities}</p>
+      <p>Status: {trip.status}</p>
       {currentUser === 'agency' ? (
         trip.status === 'pending' ? (
           <div className='agency-buttons'>
-            <button className='approve' onClick={() => approveTrip(trip.id)}>
+            <button
+              aria-label={`Approve trip to ${destination.destination}`}
+              className='approve'
+              onClick={() => approveTrip(trip.id)}
+            >
               Approve
             </button>{' '}
-            <button className='delete' onClick={() => deleteTrip(trip.id)}>
+            <button
+              aria-label={`Delete trip to ${destination.destination}`}
+              className='delete'
+              onClick={() => deleteTrip(trip.id)}
+            >
               Delete
             </button>
           </div>
         ) : (
           <div>
-            <button className='delete' onClick={() => deleteTrip(trip.id)}>
+            <button
+              aria-label={`Delete trip to ${destination.destination}`}
+              className='delete'
+              onClick={() => deleteTrip(trip.id)}
+            >
               Delete
             </button>
           </div>
         )
       ) : null}
-    </div>
+      {isError && (
+        <div role="alert" aria-live="assertive">
+          Error: {error.message}
+        </div>
+      )}
+      {isDeleteError && (
+        <div role="alert" aria-live="assertive">
+          Error deleting trip: {deleteError.message}
+        </div>
+      )}
+    </article>
   );
 };

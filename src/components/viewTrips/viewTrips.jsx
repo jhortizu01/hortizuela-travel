@@ -1,5 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
-import { useDeleteSingleTripMutation, useGetAllDestinationsQuery, useGetAllTripsQuery, useModifySingleTripMutation } from '../../api/apiSlice';
+import {
+  useDeleteSingleTripMutation,
+  useGetAllDestinationsQuery,
+  useGetAllTripsQuery,
+  useModifySingleTripMutation,
+} from '../../api/apiSlice';
 import { AgencyNavBar } from '../agencyNavBar/agencyNavBar';
 import { Card } from '../card/card';
 
@@ -20,18 +25,40 @@ export const ViewTrips = () => {
   console.log('***', trips);
 
   const [modifySingleTrip, { isLoading, isSuccess, isError, error }] =
-  useModifySingleTripMutation();
+    useModifySingleTripMutation();
 
-  const [deleteSingleTrip, {isLoading: isDeleteLoading, isSuccess: isDeleteSuccess, isError: isDeleteError, error: deleteError}] = useDeleteSingleTripMutation()
-  if (!trips || trips.length === 0) return <div>No trips found.</div>;
+  const [
+    deleteSingleTrip,
+    {
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+      isError: isDeleteError,
+      error: deleteError,
+    },
+  ] = useDeleteSingleTripMutation();
+  if (!trips || trips.length === 0)
+    return (
+      <div role='alert' aria-live='polite'>
+        No trips found.
+      </div>
+    );
 
-  if (destinationsIsLoading) return <div>Loading destinations...</div>;
+  if (destinationsIsLoading)
+    return (
+      <div role='alert' aria-live='polite'>
+        Loading destinations...
+      </div>
+    );
   if (destinationsError)
-    return <div>Error loading destinations: {destinationsError.message}</div>;
-  
-  const mytrips = trips.trips.filter(trip => {
-    return trip.userID === parseInt(id)
-  })
+    return (
+      <div role='alert' aria-live='assertive'>
+        Error loading destinations: {destinationsError.message}
+      </div>
+    );
+
+  const mytrips = trips.trips.filter((trip) => {
+    return trip.userID === parseInt(id);
+  });
 
   const tripCost = () => {
     const cost = trips.trips.reduce((accumulator, trip) => {
@@ -54,66 +81,16 @@ export const ViewTrips = () => {
     return `$${parseInt(cost).toLocaleString('en-US')}`;
   };
 
- 
-  const approveTrip = (trip) => {
-    modifySingleTrip({id: trip, status: 'approved', suggestedActivites: []})
-  }
-
-  const deleteTrip = (trip) => {
-    console.log('trip id', typeof trip)
-    deleteSingleTrip(trip)
-  }
-
   return (
     <div className='home-page'>
-<AgencyNavBar />
+      <AgencyNavBar />
 
       <div>Total cost of all trips: {tripCost()}</div>
       <div className='destination-card-container'>
         {mytrips.map((trip) => {
-          return (
-            <Card key={trip.id} trip={trip} destinations={destinations} />
-            // <div key={trip.id} className='destination-card'>
-            //   <img
-            //     src={
-            //       destinations.destinations.find(
-            //         (destination) => destination.id === trip.destinationID
-            //       ).image
-            //     }
-            //     alt={`image of ${
-            //       destinations.destinations.find(
-            //         (destination) => destination.id === trip.destinationID
-            //       ).destination
-            //     }`}
-            //   />
-            //   <div>Date: {trip.date}</div>
-            //   <div>Travelers: {trip.travelers}</div>
-            //   <div>Duration: {trip.duration}</div>
-            //   <div>
-            //     Destination:{' '}
-            //     {
-            //       destinations.destinations.find(
-            //         (destination) => destination.id === trip.destinationID
-            //       ).destination
-            //     }
-            //   </div>
-            //   <div>Suggested Activities: {trip.suggestedActivities}</div>
-            //   <div>Status: {trip.status}</div>
-            //   {trip.status === 'pending' ? (
-            //     <div>
-            //       <button onClick={() => approveTrip(trip.id)}>Approve</button> <button>Delete</button>
-            //     </div>
-            //   ) : (
-            //     <div>
-            //       <button onClick={() => deleteTrip(trip.id)}>Delete</button>
-            //     </div>
-            //   )}
-            // </div>
-          );
+          return <Card key={trip.id} trip={trip} destinations={destinations} />;
         })}
       </div>
     </div>
   );
 };
-
-

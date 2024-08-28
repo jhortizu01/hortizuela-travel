@@ -10,13 +10,15 @@ export const Landing = () => {
         alt="Image of palm trees with the text Let's Explore the World Book trips and explore new destinations with ease from anywhere"
         className='landing-background'
       />
-      <nav>
+      <nav aria-label='Main Navigation'>
         <div>
           <img src={logo} alt='logo' />
           <h1>Hortizuela Travel</h1>
         </div>
-        <button className="login">
-          <Link to='/login'>Login</Link>
+        <button className='login'>
+          <Link aria-label='Login to your account' to='/login'>
+            Login
+          </Link>
         </button>
       </nav>
     </div>
